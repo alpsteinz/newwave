@@ -1,0 +1,23 @@
+{
+  "name": "newwave",
+  "version": "1.0.0",
+  "description": "New Wave — Artist Management & A&R",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"No tests configured\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpsteinz/newwave.git"
+  },
+  "keywords": ["artist-management", "a&r", "music"],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alpsteinz/newwave/issues"
+  },
+  "homepage": "https://github.com/alpsteinz/newwave#readme",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  }
+}
