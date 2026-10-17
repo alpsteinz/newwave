@@ -1,259 +1,366 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>New Wave — Artist Management & A&R</title>
-  <meta name="description" content="İstanbul merkezli artist management, A&R ve talent discovery ajansı. Pop, Rap, Arabesk-Pop sanatçıları." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --nw-black: #0a0a0a;
-      --nw-white: #f5f3ee;
-      --nw-gold: #c9a84c;
-      --nw-gold-dim: #7a6130;
-      --nw-gray: #2a2a2a;
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--nw-black);
-      color: var(--nw-white);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
-    }
-    /* NAV */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 48px;
-      border-bottom: 0.5px solid rgba(201,168,76,0.15);
-      background: rgba(10,10,10,0.92);
-      backdrop-filter: blur(12px);
-    }
-    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--nw-white); }
-    .nav-logo span { color: var(--nw-gold); }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a { font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(245,243,238,0.55); text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--nw-gold); }
-    .nav-cta { font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--nw-black); background: var(--nw-gold); border: none; padding: 10px 24px; cursor: pointer; border-radius: 2px; transition: opacity 0.2s; }
-    .nav-cta:hover { opacity: 0.85; }
-    /* HERO */
-    .hero { position: relative; min-height: 88vh; display: flex; align-items: flex-end; padding: 0 48px 72px; overflow: hidden; }
-    .hero-bg-lines { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: repeating-linear-gradient(90deg, rgba(201,168,76,0.04) 0px, rgba(201,168,76,0.04) 1px, transparent 1px, transparent 80px); pointer-events: none; }
-    .hero-wave { position: absolute; top: 20%; right: -80px; width: 520px; opacity: 0.07; }
-    .hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--nw-gold); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
-    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--nw-gold); }
-    .hero-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(52px, 8vw, 96px); line-height: 0.92; letter-spacing: -0.02em; margin-bottom: 36px; max-width: 680px; }
-    .hero-title .accent { color: var(--nw-gold); }
-    .hero-title .italic { font-weight: 600; font-style: italic; color: rgba(245,243,238,0.35); }
-    .hero-desc { font-size: 16px; line-height: 1.7; color: rgba(245,243,238,0.55); max-width: 420px; margin-bottom: 48px; }
-    .hero-actions { display: flex; align-items: center; gap: 32px; }
-    .btn-primary { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--nw-black); background: var(--nw-gold); border: none; padding: 14px 36px; cursor: pointer; border-radius: 2px; transition: opacity 0.2s; }
-    .btn-primary:hover { opacity: 0.85; }
-    .btn-ghost { font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(245,243,238,0.5); background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: color 0.2s; }
-    .btn-ghost:hover { color: var(--nw-white); }
-    .hero-stats { position: absolute; right: 48px; bottom: 72px; display: flex; flex-direction: column; gap: 32px; text-align: right; }
-    .stat-num { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 36px; color: var(--nw-white); line-height: 1; }
-    .stat-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,243,238,0.35); margin-top: 4px; }
-    /* STRIP */
-    .about-strip { border-top: 0.5px solid rgba(255,255,255,0.06); border-bottom: 0.5px solid rgba(255,255,255,0.06); padding: 24px 48px; display: flex; align-items: center; gap: 0; overflow: hidden; }
-    .about-tag { font-size: 12px; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,243,238,0.25); white-space: nowrap; padding-right: 48px; }
-    .about-tag span { color: var(--nw-gold); }
-    /* SERVICES */
-    .section { padding: 96px 48px; }
-    .section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 64px; }
-    .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--nw-gold); margin-bottom: 16px; }
-    .section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 40px; letter-spacing: -0.02em; line-height: 1.1; }
-    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.06); }
-    .service-card { background: var(--nw-black); padding: 48px 36px; transition: background 0.25s; }
-    .service-card:hover { background: #111; }
-    .service-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.1em; color: rgba(201,168,76,0.3); margin-bottom: 32px; }
-    .service-icon-wrap { width: 44px; height: 44px; border: 0.5px solid rgba(201,168,76,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 28px; border-radius: 2px; }
-    .service-icon-wrap i { font-size: 20px; color: var(--nw-gold); }
-    .service-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 18px; margin-bottom: 14px; }
-    .service-desc { font-size: 14px; line-height: 1.65; color: rgba(245,243,238,0.45); }
-    .service-tag { display: inline-block; margin-top: 24px; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--nw-gold); border: 0.5px solid rgba(201,168,76,0.25); padding: 4px 10px; border-radius: 1px; }
-    /* ROSTER */
-    .roster-section { padding: 0 48px 96px; }
-    .roster-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-    .roster-card { background: var(--nw-gray); border: 0.5px solid rgba(255,255,255,0.06); padding: 28px 24px; border-radius: 2px; transition: border-color 0.2s; }
-    .roster-card:hover { border-color: rgba(201,168,76,0.3); }
-    .roster-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--nw-gold-dim), rgba(201,168,76,0.2)); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; color: var(--nw-gold); margin-bottom: 16px; }
-    .roster-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 16px; margin-bottom: 4px; }
-    .roster-role { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(245,243,238,0.35); }
-    .roster-pill { display: inline-block; margin-top: 14px; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--nw-black); background: var(--nw-gold); padding: 3px 10px; border-radius: 100px; }
-    /* CONTACT */
-    .contact-section { margin: 0 48px 96px; border: 0.5px solid rgba(201,168,76,0.15); padding: 72px 64px; display: flex; align-items: center; justify-content: space-between; gap: 48px; position: relative; overflow: hidden; }
-    .contact-section::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%); pointer-events: none; }
-    .contact-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 44px; letter-spacing: -0.02em; line-height: 1; max-width: 380px; }
-    .contact-title span { color: var(--nw-gold); }
-    .contact-right { display: flex; flex-direction: column; gap: 20px; }
-    .contact-info { display: flex; align-items: center; gap: 12px; font-size: 15px; color: rgba(245,243,238,0.65); }
-    .contact-info i { color: var(--nw-gold); font-size: 18px; }
-    /* FOOTER */
-    footer { border-top: 0.5px solid rgba(255,255,255,0.06); padding: 32px 48px; display: flex; align-items: center; justify-content: space-between; }
-    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,243,238,0.3); }
-    .footer-logo span { color: var(--nw-gold-dim); }
-    .footer-copy { font-size: 12px; color: rgba(245,243,238,0.2); letter-spacing: 0.05em; }
-    .footer-links { display: flex; gap: 24px; list-style: none; }
-    .footer-links a { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(245,243,238,0.25); text-decoration: none; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--nw-gold); }
-    @media (max-width: 768px) {
-      nav { padding: 16px 24px; }
-      .nav-links { display: none; }
-      .hero { padding: 0 24px 56px; min-height: 100vh; }
-      .hero-stats { display: none; }
-      .section, .roster-section { padding: 64px 24px; }
-      .services-grid { grid-template-columns: 1fr; }
-      .roster-grid { grid-template-columns: repeat(2, 1fr); }
-      .contact-section { margin: 0 24px 64px; padding: 48px 32px; flex-direction: column; }
-      footer { padding: 24px; flex-direction: column; gap: 16px; text-align: center; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Wave — Müzik, kültür, etki</title>
+<meta name="description" content="İstanbul merkezli bağımsız müzik şirketi. Menajerlik, A&R, booking, klip prodüksiyonu, kreatif yapımcılık, pazarlama, dağıtım ve plak şirketi.">
+<meta property="og:title" content="New Wave">
+<meta property="og:description" content="Yetenek geliştiriyoruz. Kültüre iz bırakıyoruz.">
+<meta property="og:image" content="/favicon.png">
+<meta name="theme-color" content="#080808">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/BasementGrotesque-Black-TR.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Basement Grotesque";src:url("/fonts/BasementGrotesque-Black-TR.woff2") format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"Krona One";src:url("/fonts/krona-one-latin-400-normal.woff2") format("woff2");font-weight:400;font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Krona One";src:url("/fonts/krona-one-latin-ext-400-normal.woff2") format("woff2");font-weight:400;font-display:swap;
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+:root{
+  --black:#080808; --white:#fff; --paper:#f4f4f4; --grey:#666; --soft:#a5a5a5; --line:rgba(255,255,255,.28); --line-dark:#d6d6d6;
+  --display:"Basement Grotesque","Arial Black",Impact,sans-serif;
+  --body:"Krona One","Helvetica Neue",Arial,sans-serif;
+  --wrap:min(1120px,100% - 32px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--black);color:var(--white);font-family:var(--body);font-size:14px;line-height:1.7;letter-spacing:-.02em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{width:var(--wrap);margin-inline:auto}
+.light{background:var(--white);color:var(--black)}
+.paper{background:var(--paper);color:var(--black)}
+.eyebrow{font-size:10px;line-height:1.4;letter-spacing:.1em;text-transform:uppercase}
+.display{font-family:var(--display);font-weight:900;letter-spacing:-.01em;line-height:1}
+section{padding:clamp(72px,10vw,120px) 0}
+
+/* header */
+.top{position:fixed;inset:0 0 auto 0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(16px,4vw,40px);mix-blend-mode:difference;pointer-events:none}
+.top>*{pointer-events:auto}
+.top img{height:26px;width:auto}
+.top-right{display:flex;gap:18px;align-items:center}
+.lang{display:flex;gap:2px;border:1px solid rgba(255,255,255,.5);border-radius:99px;padding:2px}
+.lang button{background:none;border:0;color:#fff;font:inherit;font-size:10px;letter-spacing:.1em;padding:4px 9px;border-radius:99px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:#fff;color:#000}
+
+/* hero */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:110px 16px 60px;position:relative;overflow:hidden}
+.hero .eyebrow{color:var(--soft)}
+.hero-logo{width:min(760px,88vw);margin:28px auto 30px;animation:rise 1.4s cubic-bezier(.2,.7,.1,1) both .15s}
+.hero-tag{font-family:var(--display);font-size:clamp(20px,2.6vw,32px);line-height:1.2;animation:rise 1.2s cubic-bezier(.2,.7,.1,1) both .5s}
+.scroll-cue{margin-top:46px;color:var(--soft);display:inline-flex;flex-direction:column;align-items:center;gap:12px;animation:rise 1s both .9s}
+.scroll-cue i{width:1px;height:42px;background:linear-gradient(#fff,transparent);animation:drip 2s ease-in-out infinite}
+.hero-star{position:absolute;width:14px;opacity:.5;animation:twinkle 3.5s ease-in-out infinite}
+@keyframes rise{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes twinkle{0%,100%{opacity:.15;transform:scale(.8) rotate(0)}50%{opacity:.8;transform:scale(1.1) rotate(20deg)}}
+
+/* manifesto */
+.manifesto h2{font-size:clamp(28px,4.2vw,46px);line-height:1.04;margin:22px 0 34px;max-width:900px}
+.manifesto h2 .ln{display:block;overflow:hidden;padding-top:.16em;margin-top:-.16em}
+.manifesto h2 .ln>span{display:block;transform:translateY(105%);transition:transform 1s cubic-bezier(.2,.7,.1,1)}
+.manifesto.in h2 .ln>span{transform:none}
+.manifesto p{max-width:720px}
+
+/* impact */
+.big{font-size:clamp(84px,23vw,300px);line-height:.85;margin:36px 0 34px;letter-spacing:-.02em;white-space:nowrap}
+.impact .eyebrow{color:var(--white)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:28px}
+.stats div{border-top:1px solid var(--line);padding-top:16px}
+.stats b{display:block;font-family:var(--display);font-size:clamp(22px,2.6vw,30px);line-height:1.1;margin-bottom:6px}
+.stats span{color:var(--soft);font-size:12px}
+
+/* services */
+.services h2,.how h2,.work h2,.brands h2,.contact h2{font-size:clamp(38px,6.4vw,72px);margin:22px 0 22px}
+.services .lede{max-width:620px;color:var(--grey);margin-bottom:56px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);border-left:1px solid var(--line-dark);border-top:1px solid var(--line-dark)}
+.card{border-right:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark);padding:26px 24px 56px;min-height:220px;transition:background .35s,color .35s}
+.card svg{width:20px;height:20px;margin-bottom:16px;transition:transform .6s cubic-bezier(.2,.7,.1,1)}
+.card h3{font-family:var(--display);font-size:24px;line-height:1.1;margin-bottom:14px}
+.card p{color:var(--grey);font-size:13px;transition:color .35s}
+.card:hover{background:var(--black);color:var(--white)}
+.card:hover p{color:var(--soft)}
+.card:hover svg{transform:rotate(144deg) scale(1.15);fill:currentColor}
+
+/* how */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:40px}
+.step{border-top:1px solid var(--line);padding:16px 14px 0}
+.step .eyebrow{color:var(--white)}
+.step h3{font-family:var(--display);font-size:clamp(26px,2.6vw,32px);margin:22px 0 18px;line-height:1}
+.step p{font-size:13px}
+
+/* work & brands */
+.work p,.brands p{max-width:760px}
+.work{padding-bottom:40px}
+.marquee{overflow:hidden;border-block:1px solid var(--line-dark);margin-top:56px;padding:18px 0;white-space:nowrap}
+.marquee-track{display:inline-flex;gap:40px;animation:slide 26s linear infinite;font-family:var(--display);font-size:clamp(28px,5vw,56px);line-height:1}
+.marquee-track span{display:inline-flex;align-items:center;gap:40px}
+.marquee-track svg{width:.5em;height:.5em}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* contact */
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px}
+.pill{background:transparent;color:#fff;border:1px solid #fff;border-radius:99px;font:inherit;font-size:10px;letter-spacing:.06em;padding:12px 18px;cursor:pointer;transition:background .25s,color .25s}
+.pill:hover,.pill[aria-pressed="true"],button.pill[type=submit]{background:#fff;color:#000}
+button.pill[type=submit]:hover{background:transparent;color:#fff}
+form label{display:block;font-size:10px;letter-spacing:.06em;margin:0 0 8px}
+form .f{margin-bottom:18px}
+input,textarea{width:100%;background:#fff;color:#000;border:1px solid #fff;border-radius:6px;font:inherit;font-size:12px;padding:12px 12px;outline:none;transition:box-shadow .2s}
+input::placeholder,textarea::placeholder{color:#8a8a8a}
+input:focus,textarea:focus{box-shadow:0 0 0 3px rgba(255,255,255,.35)}
+textarea{min-height:120px;resize:vertical}
+.form-note{margin-top:14px;font-size:11px;color:var(--soft);min-height:1.5em}
+.ig{display:inline-block;margin-top:30px;font-size:10px;letter-spacing:.1em}
+.ig:hover{text-decoration:underline}
+
+footer{border-top:1px solid rgba(255,255,255,.15);padding:24px clamp(16px,2vw,30px);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+footer img{height:28px;width:auto}
+footer nav{display:flex;gap:20px;font-size:10px;letter-spacing:.1em}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(36px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.1,1)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+
+@media (max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .steps{grid-template-columns:repeat(2,1fr);row-gap:36px}
+}
+@media (max-width:600px){
+  .grid{grid-template-columns:1fr}
+  .card{min-height:0;padding-bottom:34px}
+  .stats{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .top img{height:22px}
+  .top-right>.eyebrow{display:none}
+  .manifesto h2 .ln{display:inline;padding:0;margin:0}
+  .manifesto h2 .ln>span{display:inline;transform:none;opacity:0;transition:opacity .8s ease}
+  .manifesto.in h2 .ln>span{opacity:1}
+  .manifesto h2 .ln+.ln::before{content:" "}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv,.manifesto h2 .ln>span{opacity:1;transform:none}
+}
+</style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-logo">New<span>Wave</span></div>
-  <ul class="nav-links">
-    <li><a href="#hizmetler">Hizmetler</a></li>
-    <li><a href="#roster">Roster</a></li>
-    <li><a href="#hakkimizda">Hakkımızda</a></li>
-    <li><a href="#iletisim">İletişim</a></li>
-  </ul>
-  <button class="nav-cta" onclick="document.getElementById('iletisim').scrollIntoView({behavior:'smooth'})">İletişime Geç</button>
-</nav>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="star" viewBox="0 0 24 24"><path d="M12 2.6l2.75 6.05 6.6.62-4.98 4.39 1.45 6.48L12 16.8l-5.82 3.34 1.45-6.48-4.98-4.39 6.6-.62z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+</svg>
 
-<section class="hero" id="hakkimizda">
-  <div class="hero-bg-lines"></div>
-  <svg class="hero-wave" viewBox="0 0 500 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0 150 Q125 50 250 150 Q375 250 500 150" stroke="white" stroke-width="2" fill="none"/>
-    <path d="M0 180 Q125 80 250 180 Q375 280 500 180" stroke="white" stroke-width="1.5" fill="none"/>
-    <path d="M0 120 Q125 20 250 120 Q375 220 500 120" stroke="white" stroke-width="1" fill="none"/>
-  </svg>
-  <div>
-    <div class="hero-eyebrow">İstanbul — Artist Management & A&R</div>
-    <h1 class="hero-title">
-      Yeni Sesleri<br>
-      <span class="accent">Dünyaya</span><br>
-      <span class="italic">Taşıyoruz</span>
-    </h1>
-    <p class="hero-desc">Müzik endüstrisinin geleceğini şekillendiren yetenekleri keşfeder, geliştiririz. Pop'tan Rap'e, Arabesk'ten global ses'e.</p>
-    <div class="hero-actions">
-      <button class="btn-primary" onclick="document.getElementById('roster').scrollIntoView({behavior:'smooth'})">Roster'ı Gör</button>
-      <button class="btn-ghost" onclick="document.getElementById('hizmetler').scrollIntoView({behavior:'smooth'})">
-        Hizmetlerimiz <i class="ti ti-arrow-right"></i>
-      </button>
+<header class="top">
+  <a href="#top" aria-label="New Wave"><img src="/logo-white.png" alt="New Wave"></a>
+  <div class="top-right">
+    <span class="eyebrow" data-i18n="loc">İSTANBUL'DAN DÜNYAYA</span>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="tr" aria-pressed="true">TR</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
     </div>
   </div>
-  <div class="hero-stats">
-    <div><div class="stat-num">8+</div><div class="stat-label">Yıl Sektörde</div></div>
-    <div><div class="stat-num">50M+</div><div class="stat-label">Aylık Dinleme</div></div>
-    <div><div class="stat-num">TR</div><div class="stat-label">& Global</div></div>
-  </div>
-</section>
+</header>
 
-<div class="about-strip">
-  <div class="about-tag">Artist Management <span>·</span></div>
-  <div class="about-tag">A&R <span>·</span></div>
-  <div class="about-tag">Konser Organizasyon <span>·</span></div>
-  <div class="about-tag">Marka Ortaklıkları <span>·</span></div>
-  <div class="about-tag">Sosyal Medya <span>·</span></div>
-  <div class="about-tag">Talent Discovery <span>·</span></div>
-  <div class="about-tag">Artist Management <span>·</span></div>
-</div>
+<main id="top">
+  <!-- 1. HERO -->
+  <section class="hero">
+    <svg class="hero-star" style="top:22%;left:14%;fill:#fff"><use href="#star"/></svg>
+    <svg class="hero-star" style="top:70%;left:80%;animation-delay:1.2s;fill:#fff"><use href="#star"/></svg>
+    <svg class="hero-star" style="top:30%;left:86%;animation-delay:2.1s;width:9px;fill:#fff"><use href="#star"/></svg>
+    <p class="eyebrow" data-i18n="heroEyebrow">BAĞIMSIZ RUH. KÜRESEL ETKİ.</p>
+    <h1><img class="hero-logo" src="/logo-white.png" alt="New Wave"></h1>
+    <p class="hero-tag" data-i18n="heroTag">Yetenek geliştiriyoruz. Kültüre iz bırakıyoruz.</p>
+    <a href="#manifesto" class="scroll-cue eyebrow"><span data-i18n="scroll">DALGAYI YAKALA</span><i></i></a>
+  </section>
 
-<section class="section" id="hizmetler">
-  <div class="section-header">
-    <div>
-      <div class="section-label">Ne Yapıyoruz</div>
-      <h2 class="section-title">Tam Kapsamlı<br>Müzik Yönetimi</h2>
+  <!-- 2. MANIFESTO -->
+  <section class="light manifesto" id="manifesto">
+    <div class="wrap">
+      <p class="eyebrow rv" data-i18n="m_eyebrow">01 / NEW WAVE YOLU</p>
+      <h2 class="display" id="manifestoTitle"></h2>
+      <p class="rv d2" data-i18n="m_body">İstanbul merkezli bağımsız bir müzik şirketiyiz. İlk notadan bir neslin şarkısına kadar her adımda biz varız.</p>
     </div>
-  </div>
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-num">01</div>
-      <div class="service-icon-wrap"><i class="ti ti-microphone-2"></i></div>
-      <div class="service-name">Artist Management</div>
-      <p class="service-desc">Sanatçının kariyer stratejisini baştan sona planlama, sözleşme müzakereleri ve günlük yönetim.</p>
-      <span class="service-tag">Kariyer</span>
-    </div>
-    <div class="service-card">
-      <div class="service-num">02</div>
-      <div class="service-icon-wrap"><i class="ti ti-music"></i></div>
-      <div class="service-name">A&R & Talent Discovery</div>
-      <p class="service-desc">Bir sonraki büyük sesi bulmak için sürekli dinleme, analiz ve yetenek geliştirme süreçleri.</p>
-      <span class="service-tag">Keşif</span>
-    </div>
-    <div class="service-card">
-      <div class="service-num">03</div>
-      <div class="service-icon-wrap"><i class="ti ti-calendar-event"></i></div>
-      <div class="service-name">Konser & Etkinlik</div>
-      <p class="service-desc">Festival katılımlarından solo konser organizasyonuna, sözleşmeden prodüksiyona tam hizmet.</p>
-      <span class="service-tag">Canlı</span>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="roster-section" id="roster">
-  <div class="section-header">
-    <div>
-      <div class="section-label">Çalıştığımız İsimler</div>
-      <h2 class="section-title">Roster</h2>
+  <!-- 3. IMPACT -->
+  <section class="impact">
+    <div class="wrap">
+      <p class="eyebrow rv" data-i18n="i_eyebrow">02 / RAKAMLAR KONUŞUR</p>
+      <div class="big display rv" id="bigNum">15B+</div>
+      <p class="eyebrow rv" data-i18n="i_streams">PROJELERİMİZİN TOPLAM DİNLENMESİ</p>
+      <div class="stats">
+        <div class="rv d1"><b data-i18n="s1b">Milyarlarca</b><span data-i18n="s1">izlenme</span></div>
+        <div class="rv d2"><b data-i18n="s2b">15+ yıl</b><span data-i18n="s2">Müziğin tam içinden.</span></div>
+        <div class="rv d3"><b>TR · DE · UK · KZ</b><span data-i18n="s3">Dört ülke, tek dalga.</span></div>
+      </div>
     </div>
-  </div>
-  <div class="roster-grid">
-    <div class="roster-card">
-      <div class="roster-avatar">S</div>
-      <div class="roster-name">Sefo</div>
-      <div class="roster-role">Rap / Hip-Hop</div>
-      <span class="roster-pill">Aktif</span>
-    </div>
-    <div class="roster-card">
-      <div class="roster-avatar">A</div>
-      <div class="roster-name">Alizade</div>
-      <div class="roster-role">Rap / Trap</div>
-      <span class="roster-pill">Aktif</span>
-    </div>
-    <div class="roster-card">
-      <div class="roster-avatar" style="background: linear-gradient(135deg, #2a3a7a, rgba(60,80,180,0.2)); color: #6a8aff;">P</div>
-      <div class="roster-name">Poiizi</div>
-      <div class="roster-role">Pop</div>
-      <span class="roster-pill">Aktif</span>
-    </div>
-    <div class="roster-card">
-      <div class="roster-avatar" style="background: linear-gradient(135deg, #3a2a1a, rgba(180,120,40,0.2)); color: #c48840;">R</div>
-      <div class="roster-name">Rafet El Roman</div>
-      <div class="roster-role">Arabesk / Pop</div>
-      <span class="roster-pill">Aktif</span>
-    </div>
-  </div>
-</section>
+  </section>
 
-<div class="contact-section" id="iletisim">
-  <h2 class="contact-title">Birlikte<br><span>Bir Şeyler</span><br>Yapalım</h2>
-  <div class="contact-right">
-    <div class="contact-info"><i class="ti ti-mail"></i> info@newwave.com.tr</div>
-    <div class="contact-info"><i class="ti ti-map-pin"></i> İstanbul, Türkiye</div>
-    <div class="contact-info"><i class="ti ti-brand-instagram"></i> @newwavetr</div>
-    <button class="btn-primary" style="margin-top: 8px;">Mesaj Gönder →</button>
-  </div>
-</div>
+  <!-- 4. SERVICES -->
+  <section class="paper services">
+    <div class="wrap">
+      <p class="eyebrow rv" data-i18n="w_eyebrow">03 / NE YAPIYORUZ</p>
+      <h2 class="display rv" data-i18n="w_title">Sezgiden etkiye.</h2>
+      <p class="lede rv" data-i18n="w_lede">Tek şirket. Tüm süreç. Strateji, ses, görüntü ve hepsini büyüten ivme.</p>
+      <div class="grid" id="services"></div>
+    </div>
+  </section>
+
+  <!-- 5. HOW -->
+  <section class="how">
+    <div class="wrap">
+      <p class="eyebrow rv" data-i18n="h_eyebrow">04 / NASIL ÇALIŞIYORUZ</p>
+      <h2 class="display rv" data-i18n="h_title">Her dalga bir kıpırtıyla başlar.</h2>
+      <div class="steps" id="steps"></div>
+    </div>
+  </section>
+
+  <!-- 6. WORK + 7. BRANDS -->
+  <section class="light work">
+    <div class="wrap">
+      <p class="eyebrow rv" data-i18n="sw_eyebrow">05 / SEÇİLİ İŞLER</p>
+      <h2 class="display rv" data-i18n="sw_title">Kültürü harekete geçiren işler.</h2>
+      <p class="rv" data-i18n="sw_body">Klipler. Kampanyalar. Gündem yaratan anlar. Çok yakında burada.</p>
+    </div>
+    <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
+  </section>
+  <section class="light brands" style="padding-top:60px">
+    <div class="wrap">
+      <p class="eyebrow rv" data-i18n="b_eyebrow">06 / MARKALAR & PARTNERLER</p>
+      <h2 class="display rv" data-i18n="b_title">Doğru kimya. Büyük ihtimaller.</h2>
+      <p class="rv" data-i18n="b_body">Markaları müziğe değil, kültürün tam ortasına taşıyoruz. İş birliklerimiz çok yakında burada.</p>
+    </div>
+  </section>
+
+  <!-- 8. CONTACT -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <p class="eyebrow rv" data-i18n="c_eyebrow">07 / SIRA SENDE</p>
+      <h2 class="display rv" data-i18n="c_title">Bir sonraki dalga seninle başlasın.</h2>
+      <div class="btns rv" role="group">
+        <button type="button" class="pill" data-topic="demo" aria-pressed="true" data-i18n="c_demo">Demonu gönder</button>
+        <button type="button" class="pill" data-topic="work" aria-pressed="false" data-i18n="c_work">Birlikte çalışalım</button>
+      </div>
+      <form id="form" class="rv" novalidate>
+        <div class="f"><label for="n" data-i18n="f_name">İsim</label><input id="n" name="name" required autocomplete="name" data-ph="ph_name"></div>
+        <div class="f"><label for="e" data-i18n="f_email">E-posta</label><input id="e" name="email" type="email" required autocomplete="email" data-ph="ph_email"></div>
+        <div class="f"><label for="l" data-i18n="f_link">Link</label><input id="l" name="link" type="url" data-ph="ph_link"></div>
+        <div class="f"><label for="msg" data-i18n="f_msg">Mesaj</label><textarea id="msg" name="message" required data-ph="ph_msg"></textarea></div>
+        <button class="pill" type="submit" data-i18n="f_send">Gönder</button>
+        <p class="form-note" id="note" role="status"></p>
+      </form>
+      <a class="ig" href="https://instagram.com/newwavetr" target="_blank" rel="noopener">INSTAGRAM / @newwavetr</a>
+    </div>
+  </section>
+</main>
 
 <footer>
-  <div class="footer-logo">New<span>Wave</span></div>
-  <span class="footer-copy">© 2026 New Wave — newwave.com.tr</span>
-  <ul class="footer-links">
-    <li><a href="#">Instagram</a></li>
-    <li><a href="#">YouTube</a></li>
-    <li><a href="#">LinkedIn</a></li>
-  </ul>
+  <img src="/logo-white.png" alt="New Wave">
+  <nav class="eyebrow">
+    <a href="https://instagram.com/newwavetr" target="_blank" rel="noopener">INSTAGRAM</a>
+    <span data-i18n="foot">İSTANBUL / © 2026 NEW WAVE</span>
+  </nav>
 </footer>
 
+<script>
+/* ---------- AYARLAR ----------
+   Form gönderimi: FORM_ENDPOINT boşsa form, ziyaretçinin e-posta uygulamasını açar (CONTACT_EMAIL'e).
+   Formspree vb. kullanacaksan endpoint adresini buraya yapıştır. */
+const CONTACT_EMAIL = "info@newwavetr.com";
+const FORM_ENDPOINT = "";
+
+const T = {
+ tr:{
+  loc:"İSTANBUL'DAN DÜNYAYA", heroEyebrow:"BAĞIMSIZ RUH. KÜRESEL ETKİ.", heroTag:"Yetenek geliştiriyoruz. Kültüre iz bırakıyoruz.", scroll:"DALGAYI YAKALA",
+  m_eyebrow:"01 / NEW WAVE YOLU",
+  m_lines:["İsimler değişir.","Sesler değişir.","Yöntemimiz değişmez.","Strateji, yaratıcılık ve uygulamayı","sahada bir araya getirir,","kültürü şekillendiririz."],
+  m_body:"İstanbul merkezli bağımsız bir müzik şirketiyiz. İlk notadan bir neslin şarkısına kadar her adımda biz varız.",
+  i_eyebrow:"02 / RAKAMLAR KONUŞUR", big:"15 Milyar+", i_streams:"DİNLENME",
+  s1b:"Milyarlarca", s1:"izlenme", s2b:"15+ yıl", s2:"Müziğin tam içinden.", s3:"Dört ülke, tek dalga.",
+  w_eyebrow:"03 / NE YAPIYORUZ", w_title:"Sezgiden etkiye.", w_lede:"Tek şirket. Tüm süreç. Strateji, ses, görüntü ve hepsini büyüten ivme.",
+  services:[["Menajerlik","Bugünü yönetir, yarını kurarız."],["A&R","Bir sonraki sesi herkesten önce duyarız."],["Booking & Sanatçı Koordinasyonu","Sahne, takvim, ekip. Hepsi aynı ritimde."],["Klip Prodüksiyonu","Şarkıyı izlenecek bir dünyaya dönüştürürüz."],["Kreatif & Yürütücü Yapımcılık","Fikirden son master'a: müzik, görüntü ve yapay zekâ destekli içerik."],["Pazarlama & Dağıtım","Müziği platformlara, gündeme ve hayatın içine taşırız."],["Marka İş Birlikleri","Reklam gibi değil, kültür gibi hissettiren kampanyalar."],["Plak Şirketi","Cesur sesler için bağımsız bir ev."]],
+  h_eyebrow:"04 / NASIL ÇALIŞIYORUZ", h_title:"Her dalga bir kıpırtıyla başlar.",
+  steps:[["Keşfet","Potansiyeli gör. Doğru soruyu sor. Dinle."],["Geliştir","Kimliği, sesi ve stratejiyi inşa et."],["Üret","Vizyonu müzikle, filmle, kreatifle hayata geçir."],["Büyüt","İşi doğru kitleyle, doğru platformda, doğru anda buluştur."]],
+  sw_eyebrow:"05 / SEÇİLİ İŞLER", sw_title:"Kültürü harekete geçiren işler.", sw_body:"Klipler. Kampanyalar. Gündem yaratan anlar. Çok yakında burada.",
+  marquee:["Menajerlik","A&R","Booking","Klip","Prodüksiyon","Pazarlama","Dağıtım","Plak Şirketi"],
+  b_eyebrow:"06 / MARKALAR & PARTNERLER", b_title:"Doğru kimya. Büyük ihtimaller.", b_body:"Markaları müziğe değil, kültürün tam ortasına taşıyoruz. İş birliklerimiz çok yakında burada.",
+  c_eyebrow:"07 / SIRA SENDE", c_title:"Bir sonraki dalga seninle başlasın.", c_demo:"Demonu gönder", c_work:"Birlikte çalışalım",
+  f_name:"İsim", f_email:"E-posta", f_link:"Link", f_msg:"Mesaj", f_send:"Gönder",
+  ph_name:"Adın soyadın", ph_email:"E-posta adresin", ph_link:"Müziğinin ya da projenin linki", ph_msg:"Aklındakini anlat.",
+  subj_demo:"Demo", subj_work:"İş birliği", err:"Lütfen isim, geçerli bir e-posta ve mesaj gir.", ok:"Teşekkürler! Mesajın bize ulaştı.", mail:"E-posta uygulaman açılıyor…", fail:"Bir sorun oldu, lütfen Instagram'dan yaz.",
+  foot:"İSTANBUL / © 2026 NEW WAVE", title:"New Wave — Müzik, kültür, etki"
+ },
+ en:{
+  loc:"ISTANBUL / WORLDWIDE", heroEyebrow:"INDEPENDENT MINDS. GLOBAL IMPACT.", heroTag:"We build artists. We build culture.", scroll:"SCROLL TO FEEL THE WAVE",
+  m_eyebrow:"01 / THE NEW WAVE WAY",
+  m_lines:["Artists change.","Sounds change.","Our way of building them doesn't.","New Wave turns talent into culture","through strategy, creativity","and execution."],
+  m_body:"An independent music company based in Istanbul. From the first spark to the next cultural moment, we connect the dots.",
+  i_eyebrow:"02 / IMPACT, NOT JUST OUTPUT", big:"15B+", i_streams:"STREAMS GENERATED ACROSS OUR PROJECTS",
+  s1b:"Billions", s1:"of video views", s2b:"15+ years", s2:"Right inside the music.", s3:"Four countries, one wave.",
+  w_eyebrow:"03 / WHAT WE DO", w_title:"From instinct. To impact.", w_lede:"One company. Every moving part. Strategy, sound, visuals and the momentum to make them matter.",
+  services:[["Management","Long-term vision and everyday momentum, built around talent."],["A&R","Finding the next sound and shaping what comes after it."],["Booking & Artist Coordination","Connecting stages, schedules and people for seamless live experiences."],["Music Video Production","Turning a sound into a visual world worth watching."],["Creative & Executive Production","From concept to final master: music, visuals and AI-powered content."],["Marketing & Distribution","Putting music in motion, across platforms and into culture."],["Brand Partnerships","Building campaigns where brands and music genuinely connect."],["Record Label","An independent home for bold sounds and lasting ambition."]],
+  h_eyebrow:"04 / HOW WE WORK", h_title:"A spark is just the beginning.",
+  steps:[["Discover","Find the potential. Ask better questions. Listen closely."],["Develop","Build the identity, the sound and the long-term strategy."],["Produce","Bring the vision to life through music, film and creative production."],["Amplify","Connect the work to audiences, platforms and cultural conversations."]],
+  sw_eyebrow:"05 / SELECTED WORK", sw_title:"Culture in motion.", sw_body:"Music videos. Campaigns. Cultural moments. Selected projects will appear here when our films are added.",
+  marquee:["Management","A&R","Booking","Music Videos","Production","Marketing","Distribution","Record Label"],
+  b_eyebrow:"06 / BRANDS & PARTNERS", b_title:"Good chemistry. Bigger possibilities.", b_body:"We bring brands into music through ideas that belong in culture. Partner announcements coming soon.",
+  c_eyebrow:"07 / YOUR NEXT CHAPTER", c_title:"Let's make the next wave.", c_demo:"Send your demo", c_work:"Work with us",
+  f_name:"Name", f_email:"Email", f_link:"Link", f_msg:"Message", f_send:"Send message",
+  ph_name:"Your name", ph_email:"Your email address", ph_link:"A link to your music or project", ph_msg:"Tell us what you have in mind.",
+  subj_demo:"Demo", subj_work:"Collaboration", err:"Please enter your name, a valid email and a message.", ok:"Thank you! Your message has reached us.", mail:"Opening your email app…", fail:"Something went wrong, please message us on Instagram.",
+  foot:"ISTANBUL / © 2026 NEW WAVE", title:"New Wave — Music, culture, impact"
+ }
+};
+
+const starSvg='<svg viewBox="0 0 24 24" fill="none"><use href="#star"/></svg>';
+let lang='tr', topic='demo';
+try{ const s=localStorage.getItem('nw-lang'); if(s==='en'||s==='tr') lang=s; else if(!(navigator.language||'').toLowerCase().startsWith('tr')) lang='en'; }catch(e){}
+
+function render(){
+  const t=T[lang];
+  document.documentElement.lang=lang; document.title=t.title;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n; if(t[k]!=null) el.textContent=t[k];});
+  document.querySelectorAll('[data-ph]').forEach(el=>el.placeholder=t[el.dataset.ph]);
+  document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===lang));
+  const mt=document.getElementById('manifestoTitle');
+  mt.innerHTML=t.m_lines.map((l,i)=>`<span class="ln"><span style="transition-delay:${i*.09}s">${l}</span></span>`).join('');
+  const big=document.getElementById('bigNum'); big.textContent=t.big;
+  big.style.fontSize = lang==='tr' ? 'clamp(54px,13.2vw,172px)' : '';
+  document.getElementById('services').innerHTML=t.services.map(([h,p],i)=>`<article class="card rv d${i%3+1}">${starSvg}<h3>${h}</h3><p>${p}</p></article>`).join('');
+  document.getElementById('steps').innerHTML=t.steps.map(([h,p],i)=>`<div class="step rv d${i%3+1}"><p class="eyebrow">0${i+1}</p><h3>${h}</h3><p>${p}</p></div>`).join('');
+  const m=t.marquee.map(w=>`<span>${w}${starSvg}</span>`).join('');
+  document.getElementById('marquee').innerHTML=m+m;
+  observe();
+}
+
+const io=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.15,rootMargin:'0px 0px -8% 0px'}):null;
+function observe(){
+  const els=[...document.querySelectorAll('.rv:not(.in)'),document.querySelector('.manifesto:not(.in)')].filter(Boolean);
+  els.forEach(el=>io?io.observe(el):el.classList.add('in'));
+}
+
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>{lang=b.dataset.lang;try{localStorage.setItem('nw-lang',lang)}catch(e){};render();}));
+document.querySelectorAll('[data-topic]').forEach(b=>b.addEventListener('click',()=>{topic=b.dataset.topic;document.querySelectorAll('[data-topic]').forEach(x=>x.setAttribute('aria-pressed',x===b));document.getElementById(topic==='demo'?'l':'n').focus();}));
+
+document.getElementById('form').addEventListener('submit',async ev=>{
+  ev.preventDefault();
+  const t=T[lang], f=ev.target, note=document.getElementById('note');
+  const d={name:f.name.value.trim(),email:f.email.value.trim(),link:f.link.value.trim(),message:f.message.value.trim(),topic:t['subj_'+topic]};
+  if(!d.name||!/^\S+@\S+\.\S+$/.test(d.email)||!d.message){note.textContent=t.err;return;}
+  if(FORM_ENDPOINT){
+    try{const r=await fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(d)});
+      if(!r.ok) throw 0; note.textContent=t.ok; f.reset();}catch(e){note.textContent=t.fail;}
+  }else{
+    const body=`${d.message}\n\n— ${d.name}\n${d.email}${d.link?'\n'+d.link:''}`;
+    location.href=`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('New Wave — '+d.topic+' / '+d.name)}&body=${encodeURIComponent(body)}`;
+    note.textContent=t.mail;
+  }
+});
+
+render();
+</script>
 </body>
 </html>
